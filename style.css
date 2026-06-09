@@ -71,12 +71,30 @@ body {
   border-radius: 2px;
 }
 
+/* TIPS TOP — prominent banner style */
+.tips-top {
+  background: linear-gradient(135deg, #1a1d27 0%, #22263a 100%);
+  max-width: 100%;
+  border-bottom: 3px solid var(--accent);
+  padding: 48px 24px;
+}
+.tips-top .section-title { color: var(--accent); }
+.tips-top .tips-carousel {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(244,196,0,.2);
+  max-width: var(--max);
+  margin: 0 auto;
+  font-size: 1.15rem;
+}
+.tips-top .tip-dots { max-width: var(--max); margin: 16px auto 0; }
+.tips-top .section-title { max-width: var(--max); margin-left: auto; margin-right: auto; display: block; }
+
 /* BARS */
 .bars-wrap {
   display: flex;
   align-items: flex-end;
   gap: 16px;
-  height: 320px;
+  height: 400px;
   padding: 0 8px;
   background: var(--surface);
   border-radius: var(--radius);
@@ -106,6 +124,14 @@ body {
 .house-name { display: block; font-size: .78rem; font-weight: 700; color: var(--muted); }
 .house-pts  { display: block; font-size: 1rem; font-weight: 900; }
 
+/* BAR CRESTS */
+.bar-crest {
+  width: 44px;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+.bar-crest svg { width: 100%; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.5)); }
+
 /* CARDS */
 .cards-wrap {
   display: grid;
@@ -133,6 +159,13 @@ body {
   transform: translateY(-6px);
   box-shadow: 0 12px 40px rgba(0,0,0,.4);
 }
+/* CARD CRESTS */
+.card-crest {
+  width: 56px;
+  margin: 0 auto 12px;
+}
+.card-crest svg { width: 100%; height: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)); }
+
 .card-top {
   font-size: 1.1rem;
   font-weight: 800;
