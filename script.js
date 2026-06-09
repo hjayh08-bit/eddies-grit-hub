@@ -98,6 +98,11 @@ carousel.addEventListener('mouseleave', () => { dragging = false; });
 
 animateBars();
 
+// Register service worker for PWA
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/eddies-grit-hub/sw.js');
+}
+
 // POLL — Firebase Realtime Database backend
 const DB = 'https://eddies-grit-hub-default-rtdb.firebaseio.com/polls/pingpong.json';
 
