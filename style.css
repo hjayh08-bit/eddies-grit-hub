@@ -210,16 +210,20 @@ body {
 }
 
 .bar-pts {
-  font-size: .9rem;
+  font-size: .85rem;
   font-weight: 900;
-  color: #ffffff;
+  color: #000;
+  background: var(--accent);
+  border-radius: 6px;
+  padding: 3px 8px;
   position: absolute;
-  top: -28px;
+  top: -34px;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
   transition: opacity .4s ease .8s;
   white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,.4);
 }
 .bar-pts.visible { opacity: 1; }
 
