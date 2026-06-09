@@ -124,6 +124,16 @@ function showResults(data) {
   }, 50);
 }
 
+function removeVote() {
+  const stored = JSON.parse(localStorage.getItem('poll_pingpong') || '{"yes":0,"no":0}');
+  const voted = localStorage.getItem('poll_pingpong_voted');
+  if (voted && stored[voted] > 0) stored[voted]--;
+  localStorage.setItem('poll_pingpong', JSON.stringify(stored));
+  localStorage.removeItem('poll_pingpong_voted');
+  document.getElementById('poll-results').style.display = 'none';
+  document.getElementById('poll-buttons').style.display = 'flex';
+}
+
 // Show results straight away if already voted
 const existingVote = localStorage.getItem('poll_pingpong_voted');
 if (existingVote) {
