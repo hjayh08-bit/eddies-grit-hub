@@ -98,24 +98,49 @@ carousel.addEventListener('mouseleave', () => { dragging = false; });
 
 animateBars();
 
-// POLL
-function castVote(choice) {
-  const stored = JSON.parse(localStorage.getItem('poll_pingpong') || '{"yes":0,"no":0}');
-  const voted = localStorage.getItem('poll_pingpong_voted');
-  if (voted) { showResults(stored); return; }
-  stored[choice]++;
-  localStorage.setItem('poll_pingpong', JSON.stringify(stored));
+// POLL — Firebase Realtime Database backend
+const DB = 'https://eddies-grit-hub-default-rtdb.firebaseio.com/polls/pingpong.json';
+
+async function getVotes() {
+  const res = await fetch(DB);
+  const data = await res.json();
+  return data || { yes: 0, no: 0 };
+}
+
+async function setVotes(data) {
+  await fetch(DB, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+}
+
+async function castVote(choice) {
+  if (localStorage.getItem('poll_pingpong_voted')) return;
+  const data = await getVotes();
+  data[choice] = (data[choice] || 0) + 1;
+  await setVotes(data);
   localStorage.setItem('poll_pingpong_voted', choice);
-  showResults(stored);
+  showResults(data);
+}
+
+async function removeVote() {
+  const voted = localStorage.getItem('poll_pingpong_voted');
+  if (!voted) return;
+  const data = await getVotes();
+  if (data[voted] > 0) data[voted]--;
+  await setVotes(data);
+  localStorage.removeItem('poll_pingpong_voted');
+  document.getElementById('poll-results').style.display = 'none';
+  document.getElementById('poll-buttons').style.display = 'flex';
 }
 
 function showResults(data) {
-  const total = data.yes + data.no || 1;
-  const yesPct = Math.round(data.yes / total * 100);
+  const total = (data.yes || 0) + (data.no || 0) || 1;
+  const yesPct = Math.round((data.yes || 0) / total * 100);
   const noPct = 100 - yesPct;
   document.getElementById('poll-buttons').style.display = 'none';
-  const results = document.getElementById('poll-results');
-  results.style.display = 'block';
+  document.getElementById('poll-results').style.display = 'block';
   setTimeout(() => {
     document.getElementById('yes-bar').style.width = yesPct + '%';
     document.getElementById('no-bar').style.width  = noPct  + '%';
@@ -124,19 +149,7 @@ function showResults(data) {
   }, 50);
 }
 
-function removeVote() {
-  const stored = JSON.parse(localStorage.getItem('poll_pingpong') || '{"yes":0,"no":0}');
-  const voted = localStorage.getItem('poll_pingpong_voted');
-  if (voted && stored[voted] > 0) stored[voted]--;
-  localStorage.setItem('poll_pingpong', JSON.stringify(stored));
-  localStorage.removeItem('poll_pingpong_voted');
-  document.getElementById('poll-results').style.display = 'none';
-  document.getElementById('poll-buttons').style.display = 'flex';
-}
-
-// Show results straight away if already voted
-const existingVote = localStorage.getItem('poll_pingpong_voted');
-if (existingVote) {
-  const stored = JSON.parse(localStorage.getItem('poll_pingpong') || '{"yes":0,"no":0}');
-  showResults(stored);
+// On load — if already voted, fetch live results and show them
+if (localStorage.getItem('poll_pingpong_voted')) {
+  getVotes().then(showResults);
 }
