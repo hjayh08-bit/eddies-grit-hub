@@ -502,6 +502,48 @@ document.addEventListener('keydown', e => {
   else if (/^[a-zA-Z]$/.test(e.key)) wHandleKey(e.key.toUpperCase());
 });
 
+/* ============ HOLIDAY COUNTDOWN ============ */
+const COUNTDOWN_DB = 'https://eddies-grit-hub-default-rtdb.firebaseio.com/countdown.json';
+const COUNTDOWN_FALLBACK = '2026-06-25T15:25:00+10:00'; // June 25, 3:25pm Canberra time
+
+(async function initCountdown() {
+  const grid = document.getElementById('countdown-grid');
+  if (!grid) return;
+
+  let target = new Date(COUNTDOWN_FALLBACK);
+  try {
+    const res = await fetch(COUNTDOWN_DB);
+    const data = await res.json();
+    const raw = typeof data === 'string' ? data : (data && data.date);
+    if (raw && !isNaN(new Date(raw).getTime())) target = new Date(raw);
+  } catch (e) {}
+
+  const els = {
+    days: document.getElementById('cd-days'),
+    hours: document.getElementById('cd-hours'),
+    mins: document.getElementById('cd-mins'),
+    secs: document.getElementById('cd-secs')
+  };
+  const label = document.getElementById('countdown-label');
+  let timer;
+
+  function tick() {
+    const diff = target.getTime() - Date.now();
+    if (diff <= 0) {
+      clearInterval(timer);
+      label.textContent = 'Enjoy the break! 🎉';
+      grid.innerHTML = '<div class="countdown-done">School holidays are here!</div>';
+      return;
+    }
+    els.days.textContent  = Math.floor(diff / 86400000);
+    els.hours.textContent = String(Math.floor(diff / 3600000) % 24).padStart(2, '0');
+    els.mins.textContent  = String(Math.floor(diff / 60000) % 60).padStart(2, '0');
+    els.secs.textContent  = String(Math.floor(diff / 1000) % 60).padStart(2, '0');
+  }
+  tick();
+  timer = setInterval(tick, 1000);
+})();
+
 (async function initWordle() {
   if (!wBoard) return;
   wBuildBoard();

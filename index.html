@@ -49,6 +49,15 @@
       <div class="hero-welcome glass">
         <p>Built by students, for students — Eddies Grit Hub is your space to stay connected, get involved, and help shape life at St Edmund's. Vote on real issues around the college, track live house points, and pick up weekly study tips. This is just the start — the more students use it, the more it grows. The goal is simple: build something that actually means something to the boys at Eddies.</p>
       </div>
+      <div class="hero-countdown glass" id="hero-countdown">
+        <div class="countdown-label" id="countdown-label">School holidays in</div>
+        <div class="countdown-grid" id="countdown-grid">
+          <div class="cd-cell"><span class="cd-num" id="cd-days">–</span><span class="cd-unit">days</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-hours">–</span><span class="cd-unit">hrs</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-mins">–</span><span class="cd-unit">min</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-secs">–</span><span class="cd-unit">sec</span></div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -229,7 +238,7 @@
 
       <form class="feedback-form" id="feedback-form">
         <input type="text" name="name" placeholder="Your name" required />
-        <input type="email" name="email" placeholder="Your school email" required />
+        <input type="email" name="email" placeholder="Your email" required />
         <textarea name="message" placeholder="Your message…" rows="4" required></textarea>
         <input type="hidden" name="_subject" value="New Eddies Grit Hub feedback" />
         <button type="submit" class="feedback-btn magnetic">Send feedback →</button>

@@ -280,6 +280,52 @@ body::before {
   color: rgba(255,255,255,.88);
 }
 
+/* ============ HOLIDAY COUNTDOWN ============ */
+.hero-countdown {
+  max-width: 520px;
+  margin: 18px auto 0;
+  padding: 22px 28px;
+  animation: heroRise 1s var(--ease) .7s both;
+}
+.hero-countdown::before { animation: sheenSweep 1.6s var(--ease) 1.5s both; }
+.countdown-label {
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+}
+.cd-cell { display: flex; flex-direction: column; align-items: center; min-width: 58px; }
+.cd-num {
+  font-size: 2.1rem;
+  font-weight: 900;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #fff 0%, #f4c400 160%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.cd-unit {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.countdown-done {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
 /* ============ GLASS CARD SHARED ============ */
 .poll-inner, .tips-inner, .feedback-inner {
   max-width: 720px;
@@ -738,6 +784,10 @@ footer {
   .hero-logo { height: 108px; }
   .hero-welcome { margin-top: 36px; padding: 22px 20px; }
   .hero-welcome p { font-size: .95rem; }
+  .hero-countdown { margin-top: 14px; padding: 18px 16px; }
+  .countdown-grid { gap: 16px; }
+  .cd-cell { min-width: 48px; }
+  .cd-num { font-size: 1.7rem; }
   .poll-inner, .feedback-inner { padding: 28px 20px; }
   .poll-buttons { flex-direction: column; gap: 12px; }
   .poll-btn { width: 100%; padding: 22px 24px; }
